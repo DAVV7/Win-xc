@@ -45,7 +45,7 @@
       display: none;
     }
 
-    iframe {
+    video {
       border-radius: 20px;
       width: 640px;
       height: 360px;
@@ -77,36 +77,34 @@
   <button id="playBtn">Putar Video</button>
 
   <div class="video-box" id="videoContainer">
-    <iframe id="streamFrame"
-      src=""
-      frameborder="0"
-      allow="autoplay"
-      allowfullscreen>
-    </iframe>
+    <video id="winnerVideo" autoplay>
+      <source src="https://files.catbox.moe/lt8etm.mp4" type="video/mp4"> <!-- Ganti dengan link videomu -->
+      Browser tidak mendukung video.
+    </video>
   </div>
 
   <script>
     const playBtn = document.getElementById("playBtn");
     const videoContainer = document.getElementById("videoContainer");
-    const iframe = document.getElementById("streamFrame");
+    const video = document.getElementById("winnerVideo");
 
+    playBtn.addEventListener("click", () => {
+      videoContainer.style.display = "block";
+      playBtn.style.display = "none";
+      video.play();
+    });
+
+    // ⏩ Ketika video selesai, redirect otomatis
+    video.addEventListener("ended", () => {
+      window.location.href = "https://687310fc6c4744a10929cd95--masukan-xc.netlify.app/";
+    });
+
+    // Blokir shortcut inspect element
     document.addEventListener('keydown', function(e) {
       if (e.key === "F12" || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
         e.preventDefault();
         e.stopPropagation();
       }
-    });
-
-    playBtn.addEventListener("click", () => {
-      // Tampilkan video iframe
-      iframe.src = "https://streamable.com/e/ac4eg0?autoplay=1";
-      videoContainer.style.display = "block";
-      playBtn.style.display = "none";
-
-      // Setelah video selesai (misal 10 detik), redirect
-      setTimeout(() => {
-        window.location.href = "https://687310fc6c4744a10929cd95--masukan-xc.netlify.app/";
-      }, 10000); // <-- Ganti 10000 (10 detik) dengan durasi video kamu
     });
   </script>
 
